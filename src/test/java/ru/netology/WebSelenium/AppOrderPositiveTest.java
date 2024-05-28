@@ -1,12 +1,20 @@
 package ru.netology.WebSelenium;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.RemoteWebElement;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.openqa.selenium.By.cssSelector;
 
 public class AppOrderPositiveTest {
     private WebDriver driver;
@@ -23,7 +31,7 @@ public class AppOrderPositiveTest {
 
     @BeforeAll
     public static void setupAll() {
-        System.setProperty("webdriver.chrome.driver", "\"C:\\Users\\nasty\\Downloads\\chromedriver-win64.zip\\chromedriver-win64\\chromedriver.exe\"");
+        WebDriverManager.chromedriver().setup();
     }
 
     @AfterEach
@@ -34,10 +42,10 @@ public class AppOrderPositiveTest {
 
     @Test
     public void ShouldBeSuccessfulForm() {
-        ChromeOptions options = new ChromeOptions();
-
-
-
-
+        driver.findElement(cssSelector("[data-test-id = 'name']input")).sendKeys("Путров Петр Петрович");
+        driver.findElement(cssSelector("[data-test-id = 'phone']input")).sendKeys("+79995077768");
+        driver.findElement(cssSelector("[data-test-id='agreement']")).click();
+        driver.findElement(cssSelector("button.button")).click();
+        var actualElement = driver.findElement(cssSelector("[data-test-id=order success]"));
     }
 }
