@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="ru.netology.WebSelenium.AppOrderNegativeTest" tests="3" skipped="0" failures="3" errors="0" timestamp="2024-05-29T15:50:45" hostname="LAPTOP-DVIS9T4E" time="0.024">
+<testsuite name="ru.netology.WebSelenium.AppOrderNegativeTest" tests="3" skipped="0" failures="3" errors="0" timestamp="2024-05-29T16:46:21" hostname="LAPTOP-DVIS9T4E" time="0.022">
   <properties/>
-  <testcase name="shouldBeFailedIncorrectPhoneInput()" classname="ru.netology.WebSelenium.AppOrderNegativeTest" time="0.021">
+  <testcase name="shouldBeFailedIncorrectPhoneInput()" classname="ru.netology.WebSelenium.AppOrderNegativeTest" time="0.018">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at ru.netology.WebSelenium.AppOrderNegativeTest.BeforeEach(AppOrderNegativeTest.java:25)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
@@ -131,7 +131,7 @@
 		... 68 more
 </failure>
   </testcase>
-  <testcase name="shouldBeFailedDataNotEnteredEnough()" classname="ru.netology.WebSelenium.AppOrderNegativeTest" time="0.001">
+  <testcase name="shouldBeFailedDataNotEnteredEnough()" classname="ru.netology.WebSelenium.AppOrderNegativeTest" time="0.002">
     <failure message="java.lang.NullPointerException" type="java.lang.NullPointerException">java.lang.NullPointerException
 	at ru.netology.WebSelenium.AppOrderNegativeTest.BeforeEach(AppOrderNegativeTest.java:25)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
