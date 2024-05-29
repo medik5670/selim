@@ -25,7 +25,7 @@ public class AppOrderPositiveTest {
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--no-sandbox");
         options.addArguments("--headless");
-        driver.get("http://0.0.0.0:9999");
+        driver.get("http://localhost:9999");
         driver = new ChromeDriver(options);
     }
 
@@ -41,11 +41,14 @@ public class AppOrderPositiveTest {
     }
 
     @Test
-    public void ShouldBeSuccessfulForm() {
+    public void shouldBeSuccessfulForm() {
         driver.findElement(cssSelector("[data-test-id = 'name']input")).sendKeys("Путров Петр Петрович");
         driver.findElement(cssSelector("[data-test-id = 'phone']input")).sendKeys("+79995077768");
         driver.findElement(cssSelector("[data-test-id='agreement']")).click();
         driver.findElement(cssSelector("button.button")).click();
-        var actualElement = driver.findElement(cssSelector("[data-test-id=order success]"));
+        String text = driver.findElement(By.cssSelector("[data-test-id=order-success]")).getText();
+        assertEquals("Ваша заявка успешно отправлена!", text.trim());
+        assertTrue(driver.findElement(By.cssSelector("[data-test-id=order-success]")).isDisplayed());
     }
 }
+
