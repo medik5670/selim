@@ -25,8 +25,8 @@ public class AppOrderPositiveTest {
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--no-sandbox");
         options.addArguments("--headless");
-        driver.get("http://localhost:9999");
         driver = new ChromeDriver(options);
+        driver.get("http://localhost:9999");
     }
 
     @BeforeAll
@@ -49,6 +49,26 @@ public class AppOrderPositiveTest {
         String text = driver.findElement(By.cssSelector("[data-test-id=order-success]")).getText();
         assertEquals("Ваша заявка успешно отправлена!", text.trim());
         assertTrue(driver.findElement(By.cssSelector("[data-test-id=order-success]")).isDisplayed());
+    }
+
+    @Test
+    public void shouldBeSuccessfulName() {
+        driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("Ольга Евгений Он Оп Рог Шаг Ван Рог Пав Лог Дош Он Ван-Гог Рит Ман Вас Лег Шук Лун Лан Зог Дог Жана Пара Вана");
+        driver.findElement(By.className("checkbox__box")).click();
+        driver.findElement(By.className("button")).click();
+        String text = driver.findElement(By.cssSelector("[data-test-id=order-success]")).getText();
+
+        assertEquals("Ваша заявка успешно отправлена!", text.trim());
+    }
+
+    @Test
+    public void shouldBeSuccessfulNameWithDash() {
+        driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("Ольга Дмитриевна-Палан");
+        driver.findElement(By.className("checkbox__box")).click();
+        driver.findElement(By.className("button")).click();
+        String text = driver.findElement(By.cssSelector("[data-test-id=order-success]")).getText();
+
+        assertEquals("Ваша заявка успешно отправлена!", text.trim());
     }
 }
 

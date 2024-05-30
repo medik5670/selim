@@ -22,8 +22,8 @@ public class AppOrderNegativeTest {
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--no-sandbox");
         options.addArguments("--headless");
-        driver.get("http://localhost:9999");
         driver = new ChromeDriver(options);
+        driver.get("http://localhost:9999");
     }
 
     @BeforeAll
@@ -48,8 +48,8 @@ public class AppOrderNegativeTest {
     }
     @Test
     public void shouldBeFailedIncorrectPhoneInput() {
-        driver.findElement(By.xpath("//span[@data-test-id='name']//input")).sendKeys("Aron");
-        driver.findElement(By.xpath("//span[@data-test-id='phone']//input")).sendKeys("+700000000");
+        driver.findElement(By.xpath("//span[@data-test-id='name']//input")).sendKeys("Ольга Павловна - Нитше");
+        driver.findElement(By.xpath("//span[@data-test-id='phone']//input")).sendKeys("+7000000000");
         driver.findElement(By.xpath("//label[@data-test-id='agreement']")).click();
         driver.findElement(By.xpath("//button[contains(@class,'button')]")).click();
         assertEquals("Телефон указан неверно. Должно быть 11 цифр, например: +7 (901) 123-45-67",
@@ -64,8 +64,69 @@ public class AppOrderNegativeTest {
         String text = driver.findElement(By.cssSelector("[data-test-id='name'].input_invalid .input__sub")).getText();
         assertEquals("Все поля обязательны для заполнения", text.trim());
     }
-
+    @Test
+    public void shouldBeFailedPhoneIncorrectNumbers(){
+        driver.findElement(By.xpath("//span[@data-test-id='name']//input")).sendKeys("Иван Иванович Маслов");
+        driver.findElement(By.xpath("//span[@data-test-id='phone']//input")).sendKeys("+2300000000");
+        driver.findElement(By.xpath("//label[@data-test-id='agreement']")).click();
+        driver.findElement(By.xpath("//button[contains(@class,'button')]")).click();
+        assertEquals("Телефон указан неверно. Должно быть 11 цифр, например: +7 (901) 123-45-67",
+                driver.findElement(By.xpath("//span[@data-test-id='name')[contains(@class,'input_invalid')]//span[@class='input__sub']"))
+                        .getText().trim());
     }
+    @Test
+    public void shouldBeFailedDataNotEnteredInsufficient(){
+        driver.findElement(By.xpath("//span[@data-test-id='phone']//input")).sendKeys("+79177113298");
+        driver.findElement(By.className("checkbox__box")).click();
+        driver.findElement(By.className("button")).click();
+        String text = driver.findElement(By.cssSelector("[data-test-id='name'].input_invalid .input__sub")).getText();
+        assertEquals("Все поля обязательны для заполнения", text.trim());
+    }
+    @Test
+    public void shouldBePhoneIsNotCorrect()  {
+        driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("Иванова Инна Валерьевна");
+        driver.findElement(By.cssSelector("[data-test-id='phone'] input")).sendKeys("Clear");
+        driver.findElement(By.className("checkbox__box")).click();
+        driver.findElement(By.className("button")).click();
+        String text = driver.findElement(By.cssSelector("[data-test-id='phone'].input_invalid .input__sub")).getText();
+        assertEquals("Телефон указан неверно. Должно быть 11 цифр, например: +7 (901) 123-45-67",
+                driver.findElement(By.xpath("//span[@data-test-id='name')[contains(@class,'input_invalid')]//span[@class='input__sub']"))
+                        .getText().trim());
+    }
+    @Test
+    public void shouldBeSufficientNumberDigits()  {
+        driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("Дарья Петровна Липницкая");
+        driver.findElement(By.cssSelector("[data-test-id='phone'] input")).sendKeys("+787656734215");
+        driver.findElement(By.className("checkbox__box")).click();
+        driver.findElement(By.className("button")).click();
+        String text = driver.findElement(By.cssSelector("[data-test-id='phone'].input_invalid .input__sub")).getText();
+        assertEquals("Телефон указан неверно. Должно быть 11 цифр, например: +7 (901) 123-45-67",
+                driver.findElement(By.xpath("//span[@data-test-id='name')[contains(@class,'input_invalid')]//span[@class='input__sub']"))
+                        .getText().trim());
+    }
+    @Test
+    public void shouldBeWithoutSpaces() {
+        driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("Иванов Иван Иванович");
+        driver.findElement(By.cssSelector("[data-test-id='phone'] input")).sendKeys("+ 79997097654");
+        driver.findElement(By.className("checkbox__box")).click();
+        driver.findElement(By.className("button")).click();
+        String text = driver.findElement(By.cssSelector("[data-test-id='phone'].input_invalid .input__sub")).getText();
+        assertEquals("Телефон указан неверно. Должно быть 11 цифр, например: +7 (901) 123-45-67",
+                driver.findElement(By.xpath("//span[@data-test-id='name')[contains(@class,'input_invalid')]//span[@class='input__sub']"))
+                        .getText().trim());
+    }
+    @Test
+    void shouldBeFailedWithDash()  {
+        driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("-Иван Иванов");
+        driver.findElement(By.cssSelector("[data-test-id='phone'] input")).sendKeys("+79177113298");
+        driver.findElement(By.className("checkbox__box")).click();
+        driver.findElement(By.className("button")).click();
+        String text = driver.findElement(By.cssSelector("[data-test-id='name'].input_invalid .input__sub")).getText();
+        assertEquals("Имя и Фамилия указаные неверно", text);
+    }
+}
+
+
 
 
 
