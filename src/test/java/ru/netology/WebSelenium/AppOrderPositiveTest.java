@@ -42,8 +42,8 @@ public class AppOrderPositiveTest {
 
     @Test
     public void shouldBeSuccessfulForm() {
-        driver.findElement(cssSelector("[data-test-id = 'name']input")).sendKeys("Путров Петр Петрович");
-        driver.findElement(cssSelector("[data-test-id = 'phone']input")).sendKeys("+79995077768");
+        driver.findElement(cssSelector("[data-test-id ='name']input")).sendKeys("Путров Петр Петрович");
+        driver.findElement(cssSelector("[data-test-id ='phone']input")).sendKeys("+79995077768");
         driver.findElement(cssSelector("[data-test-id='agreement']")).click();
         driver.findElement(cssSelector("button.button")).click();
         String text = driver.findElement(By.cssSelector("[data-test-id=order-success]")).getText();
@@ -52,18 +52,9 @@ public class AppOrderPositiveTest {
     }
 
     @Test
-    public void shouldBeSuccessfulName() {
-        driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("Ольга Евгений Он Оп Рог Шаг Ван Рог Пав Лог Дош Он Ван-Гог Рит Ман Вас Лег Шук Лун Лан Зог Дог Жана Пара Вана");
-        driver.findElement(By.className("checkbox__box")).click();
-        driver.findElement(By.className("button")).click();
-        String text = driver.findElement(By.cssSelector("[data-test-id=order-success]")).getText();
-
-        assertEquals("Ваша заявка успешно отправлена!", text.trim());
-    }
-
-    @Test
     public void shouldBeSuccessfulNameWithDash() {
         driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("Ольга Дмитриевна-Палан");
+        driver.findElement(cssSelector("[data-test-id = 'phone']input")).sendKeys("+79995077768");
         driver.findElement(By.className("checkbox__box")).click();
         driver.findElement(By.className("button")).click();
         String text = driver.findElement(By.cssSelector("[data-test-id=order-success]")).getText();
