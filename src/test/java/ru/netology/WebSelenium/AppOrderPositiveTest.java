@@ -1,6 +1,5 @@
 package ru.netology.WebSelenium;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,12 +27,6 @@ public class AppOrderPositiveTest {
         driver = new ChromeDriver(options);
         driver.get("http://localhost:9999");
     }
-
-    @BeforeAll
-    public static void setupAll() {
-        WebDriverManager.chromedriver().setup();
-    }
-
     @AfterEach
     public void afterEach() {
         driver.quit();
@@ -42,24 +35,24 @@ public class AppOrderPositiveTest {
 
     @Test
     public void shouldBeSuccessfulForm() {
-        driver.findElement(cssSelector("[data-test-id ='name']input")).sendKeys("Путров Петр Петрович");
-        driver.findElement(cssSelector("[data-test-id ='phone']input")).sendKeys("+79995077768");
-        driver.findElement(cssSelector("[data-test-id='agreement']")).click();
-        driver.findElement(cssSelector("button.button")).click();
+        driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("Путров Петр Петрович");
+        driver.findElement(By.cssSelector("[data-test-id='phone'] input")).sendKeys("+79995077768");
+        driver.findElement(By.cssSelector("[data-test-id='agreement']")).click();
+        driver.findElement(By.cssSelector("button.button")).click();
         String text = driver.findElement(By.cssSelector("[data-test-id=order-success]")).getText();
-        assertEquals("Ваша заявка успешно отправлена!", text.trim());
+        assertEquals("Ваша заявка успешно отправлена! Наш менеджер свяжется с вами в ближайшее время.", text.trim());
         assertTrue(driver.findElement(By.cssSelector("[data-test-id=order-success]")).isDisplayed());
     }
 
     @Test
     public void shouldBeSuccessfulNameWithDash() {
         driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("Ольга Дмитриевна-Палан");
-        driver.findElement(cssSelector("[data-test-id = 'phone']input")).sendKeys("+79995077768");
+        driver.findElement(By.cssSelector("[data-test-id='phone'] input")).sendKeys("+79995077768");
         driver.findElement(By.className("checkbox__box")).click();
         driver.findElement(By.className("button")).click();
         String text = driver.findElement(By.cssSelector("[data-test-id=order-success]")).getText();
-
-        assertEquals("Ваша заявка успешно отправлена!", text.trim());
+        assertEquals("Ваша заявка успешно отправлена! Наш менеджер свяжется с вами в ближайшее время.", text.trim());
+        assertTrue(driver.findElement(By.cssSelector("[data-test-id=order-success]")).isDisplayed());
     }
 }
 
